@@ -1,5 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "react-modal";
+import { supabase } from ".././../utils/supabaseClient";
+import useSWR from "swr";
+
 const customStyles = {
   content: {
     top: "50%",
@@ -28,6 +31,31 @@ const LayoutHeader = (props) => {
   function closeModal() {
     setIsOpen(false);
   }
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async (email) => {
+    try {
+      setLoading(true);
+      const { error } = await supabase.auth.signIn({ email });
+      if (error) throw error;
+      alert("Check your email for the login link!");
+    } catch (error) {
+      alert(error.error_description || error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const [session, setSession] = useState(null);
+
+  useEffect(() => {
+    setSession(supabase.auth.session());
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+  }, []);
   return (
     <>
       <div className="flex justify-between">
@@ -88,12 +116,23 @@ const LayoutHeader = (props) => {
               />
             </svg>
           </div>
-          <button
-            onClick={() => openModal()}
-            className="my-auto text-gray-800 text-sm font-semibold"
-          >
-            Login
-          </button>
+          {!session ? (
+            <button
+              onClick={() => openModal()}
+              className="my-auto text-gray-800 text-sm font-semibold"
+            >
+              Login
+            </button>
+          ) : (
+            <button
+              onClick={async () =>
+                supabase.auth.signOut().then(() => console.log("logout"))
+              }
+              className="my-auto text-gray-800 text-sm font-semibold"
+            >
+              Logout
+            </button>
+          )}
         </div>
       </div>
       <Modal
@@ -128,17 +167,27 @@ const LayoutHeader = (props) => {
           </h2>
           <input
             className="px-24 text-gray-800 text-center border-2 border-black font-bold font-mono mt-2 py-2"
-            placeholder="username or email"
+            placeholder="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <br />
-          <input
+          {/* <input
             className="px-24 text-gray-800 text-center border-2 border-black font-bold font-mono mt-4 py-2"
             placeholder="password"
             type="password"
           />
-          <br />
-          <button className="w-full font-mono mt-4 border-2 px-4 py-2 text-white bg-black hover:bg-transparent hover:text-black border-black ">
-            Login
+          <br /> */}
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              handleLogin(email);
+            }}
+            disabled={loading}
+            className="w-full font-mono mt-4 border-2 px-4 py-2 text-white bg-black hover:bg-transparent hover:text-black border-black "
+          >
+            <span>{loading ? "Loading" : "Send magic link"}</span>
           </button>
           <div className="mt-4 flex justify-between">
             <a href="#" className="underline text-gray-500 font-mono text-left">

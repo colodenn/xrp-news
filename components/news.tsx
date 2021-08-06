@@ -1,7 +1,51 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { supabase } from "../utils/supabaseClient";
 
 const News = (props) => {
-  const [news, setNews] = useState([1, 2, 3, 4, 5]);
+  const [news, setNews] = useState([]);
+  const [days, setDays] = useState(365);
+  const [price, setPrice] = useState(0.72);
+  const fetcher = (url, token, data) =>
+    fetch(url, {
+      method: "POST",
+      headers: new Headers({ "Content-Type": "application/json", token }),
+      credentials: "same-origin",
+      body: data,
+    }).then((res) => res.json());
+  const [session, setSession] = useState(null);
+  const mySubscription = supabase
+    .from("predictions")
+    .on("INSERT", (payload) => {
+      setNews(news.concat(payload.new));
+    })
+    .subscribe();
+
+  useEffect(() => {
+    setSession(supabase.auth.session());
+    async function get() {
+      console.log("test");
+      let res = await supabase
+        .from("predictions")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(6);
+      setNews(res.data);
+      console.log(res);
+    }
+
+    get();
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+  }, []);
+
+  function makePrediction() {
+    fetcher(
+      "/api/prediction",
+      session.access_token,
+      JSON.stringify({ price: price, days: days })
+    ).then((res) => setNews(news.concat(res).reverse()));
+  }
   return (
     <>
       <div className="mt-24">
@@ -30,6 +74,8 @@ const News = (props) => {
                     name="price"
                     className="my-auto border-2 border-black px-2 py-2 align-center"
                     placeholder="$0.72"
+                    value={price}
+                    onChange={(e) => setPrice(Number(e.target.value))}
                   />
                 </label>
               </div>
@@ -40,32 +86,40 @@ const News = (props) => {
                     name="price"
                     className="my-auto border-2 border-black px-2 py-2 align-center"
                     placeholder="356"
+                    value={days}
+                    onChange={(e) => setDays(Number(e.target.value))}
                   />
                   <span className="ml-4">Days</span>
                 </label>
               </div>
             </div>
             <div>
-              <button className="ml-8     hover:bg-transparent hover:text-black border-2 border-black bg-black text-white px-4 py-2 font-medium">
+              <button
+                onClick={() => makePrediction()}
+                className="ml-8     hover:bg-transparent hover:text-black border-2 border-black bg-black text-white px-4 py-2 font-medium"
+              >
                 Submit
               </button>
             </div>
           </div>
           {news.map((e) => (
-            <div className="flex justify-between font-mono flex border-2 mb-8 border-black px-8 py-4">
+            <div
+              key={e.id}
+              className="flex justify-between font-mono flex border-2 mb-8 border-black px-8 py-4"
+            >
               <div className="flex font-mono">
                 <div className="mr-16 my-auto ">
-                  <h1 className="text-4xl font-bold">$5</h1>
+                  <h1 className="text-4xl font-bold  w-20">${e.price}</h1>
                 </div>
                 <div>
-                  <p className="font-semibold">in 365 days</p>
+                  <p className="font-semibold">in {e.days} days</p>
                   <h5>
-                    /u/DeepFuckingValue predicts on 6. August that XRP will hit
-                    $5 in 365 days.
+                    somebody predicts on {e.created_at} that XRP will hit $
+                    {e.price} in {e.days} days.
                   </h5>
                   <p className="italic">
-                    <span className="italic">DeepFuckingValue</span> -{" "}
-                    <span>on 6. August</span>
+                    <span className="italic">anon</span> -{" "}
+                    <span>on {e.created_at}</span>
                   </p>
                 </div>
               </div>
@@ -86,7 +140,7 @@ const News = (props) => {
                     />
                   </svg>
                 </div>
-                <p className="font-mono">244</p>
+                <p className="font-mono">{e.votes}</p>
                 <div className="cursor-pointer">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
