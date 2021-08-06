@@ -16,7 +16,7 @@ const News = (props) => {
   const mySubscription = supabase
     .from("predictions")
     .on("INSERT", (payload) => {
-      setNews(news.concat(payload.new).reverse());
+      setNews([payload.new].concat(news));
       console.log("new subscribes");
     })
     .subscribe();
@@ -30,7 +30,7 @@ const News = (props) => {
         .select("*")
         .order("created_at", { ascending: false })
         .limit(6);
-      setNews(res.data);
+      setNews(res.data.reverse());
       console.log(res);
     }
 
