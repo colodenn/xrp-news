@@ -176,7 +176,7 @@ const CalculateRevenue = (props) => {
           <div className="mt-8">
             <div className="mb-4">
               <h5 className="text-widest tracking-widest font-light text-xl text-right">
-                Totwal Return Rate
+                Total Return Rate
               </h5>
               <h1 className="text-2xl font-semibold text-right">
                 {((revenue / (price * amount) - 1) * 100).toFixed(2)}%
