@@ -6,11 +6,13 @@ import MainContent from "../../components/mainContent";
 export default function Home() {
   return (
     <>
-      <Header />
-      <Layout>
-        <LayoutHeader />
-        <MainContent />
-      </Layout>
+      <div id="app">
+        <Header />
+        <Layout>
+          <LayoutHeader />
+          <MainContent />
+        </Layout>
+      </div>
     </>
   );
 }

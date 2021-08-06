@@ -67,8 +67,8 @@ const Linechart = (props) => {
           dataKey="z"
           stroke="#0068ff"
           dot={false}
-          activeDot={false}
           strokeWidth={0}
+          activeDot={false}
         />
       </LineChart>
     </ResponsiveContainer>

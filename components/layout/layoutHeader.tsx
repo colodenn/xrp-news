@@ -1,4 +1,33 @@
+import { useState } from "react";
+import Modal from "react-modal";
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    borderWidth: "2px",
+    borderColor: "black",
+    borderRadius: "0px",
+  },
+};
+Modal.setAppElement("#app");
+
 const LayoutHeader = (props) => {
+  const [modalIsOpen, setIsOpen] = useState(false);
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
   return (
     <>
       <div className="flex justify-between">
@@ -59,14 +88,71 @@ const LayoutHeader = (props) => {
               />
             </svg>
           </div>
-          <a
-            href="/portfolio"
+          <button
+            onClick={() => openModal()}
             className="my-auto text-gray-800 text-sm font-semibold"
           >
             Login
-          </a>
+          </button>
         </div>
       </div>
+      <Modal
+        isOpen={modalIsOpen}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <div className="pb-6 pt-4 px-16 text-center mx-auto">
+          <div
+            className="flex justify-end mb-4 cursor-pointer"
+            onClick={() => closeModal()}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </div>
+          <h2 className="mb-8 text-gray-800 text-center font-mono font-semibold text-2xl">
+            Login or Register
+          </h2>
+          <input
+            className="px-24 text-gray-800 text-center border-2 border-black font-bold font-mono mt-2 py-2"
+            placeholder="username or email"
+          />
+          <br />
+          <input
+            className="px-24 text-gray-800 text-center border-2 border-black font-bold font-mono mt-4 py-2"
+            placeholder="password"
+            type="password"
+          />
+          <br />
+          <button className="w-full font-mono mt-4 border-2 px-4 py-2 text-white bg-black hover:bg-transparent hover:text-black border-black ">
+            Login
+          </button>
+          <div className="mt-4 flex justify-between">
+            <a href="#" className="underline text-gray-500 font-mono text-left">
+              Forgot Password?
+            </a>
+            <a
+              href="#"
+              className="underline text-gray-500 font-mono text-right"
+            >
+              Create Account
+            </a>
+          </div>
+        </div>
+      </Modal>
     </>
   );
 };
