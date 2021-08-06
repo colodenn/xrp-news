@@ -22,7 +22,7 @@ const LayoutHeader = (props) => {
           <h1 className="font-semibold my-auto">XRP to the Moon</h1>
         </a>
         <div className="my-auto  tracking-widest flex text-sm font-medium text-gray-700">
-          <a href="#" style={{ color: "#1b1b1b" }} className="mr-12 my-auto">
+          {/* <a href="#" style={{ color: "#1b1b1b" }} className="mr-12 my-auto">
             Crypto
           </a>
           <a href="#" style={{ color: "#1b1b1b" }} className="mr-12 my-auto">
@@ -30,7 +30,7 @@ const LayoutHeader = (props) => {
           </a>
           <a href="#" style={{ color: "#1b1b1b" }} className="mr-12 my-auto">
             Crypto
-          </a>
+          </a> */}
           <div
             className=" my-auto p-3 mr-12"
             style={{ backgroundColor: "#1b1b1b" }}

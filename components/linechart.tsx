@@ -46,7 +46,11 @@ const Linechart = (props) => {
           tickLine={false}
           orientation="right"
         />
-        <Tooltip />
+        <Tooltip
+          label="z"
+          separator=": "
+          formatter={(value, name, props) => "$" + value}
+        />
 
         <Line
           yAxisId="right"
@@ -55,6 +59,16 @@ const Linechart = (props) => {
           stroke="#0068ff"
           dot={false}
           strokeWidth={2}
+        />
+
+        <Line
+          yAxisId="right"
+          type="monotone"
+          dataKey="z"
+          stroke="#0068ff"
+          dot={false}
+          activeDot={false}
+          strokeWidth={0}
         />
       </LineChart>
     </ResponsiveContainer>
