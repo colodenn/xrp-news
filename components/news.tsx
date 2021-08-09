@@ -137,7 +137,9 @@ const News = (props) => {
                     onClick={(e) => {
                       news[index].votes = news[index].votes + 1;
                       setNews([...news]);
-                      e.target.style.stroke = "blue";
+                      if (typeof window != "undefined") {
+                        e.target.style.stroke = "blue";
+                      }
                     }}
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-4 w-4 mx-auto"
