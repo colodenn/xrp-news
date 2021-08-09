@@ -164,7 +164,7 @@ const News = (props) => {
                       news[index].votes = news[index].votes - 1;
                       setNews([...news]);
 
-                      e.target.style.stroke = "blue";
+                      (e.target as HTMLElement).style.stroke = "blue";
                     }}
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-4 w-4 mx-auto"
