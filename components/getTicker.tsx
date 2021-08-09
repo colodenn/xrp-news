@@ -15,7 +15,14 @@ const GetTicker = () => {
     });
   }, []);
 
-  const [ticker, setTicker] = useState({});
+  const [ticker, setTicker] = useState({
+    xrp_price: 0,
+    xrp_gain: 0,
+    xrp_cap: 0,
+    xrp_cap_gain: 0,
+    crypto_cap: 0,
+    cypto_gain: 0,
+  });
   return (
     <div className="flex">
       <div className="flex mr-8 text-white text-xs align-middle">
