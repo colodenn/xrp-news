@@ -30,7 +30,7 @@ const News = (props) => {
         .select("*")
         .order("created_at", { ascending: false })
         .limit(6);
-      setNews(res.data.reverse());
+      setNews(res.data);
       console.log(res);
     }
 
@@ -131,12 +131,19 @@ const News = (props) => {
                 </div>
               </div>
               <div className="text-center   my-auto ">
-                <div className="cursor-pointer">
+                {/* Arrow Up */}
+                <div className="cursor-pointer ">
                   <svg
+                    onClick={(e) => {
+                      news[index].votes = news[index].votes + 1;
+                      setNews([...news]);
+                      e.target.style.stroke = "blue";
+                    }}
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-4 w-4 mx-auto"
                     fill="none"
                     viewBox="0 0 24 24"
+                    // change stroke color to match your design
                     stroke="currentColor"
                   >
                     <path
@@ -148,8 +155,15 @@ const News = (props) => {
                   </svg>
                 </div>
                 <p className="font-mono">{e.votes}</p>
+                {/* Arrow Down  */}
                 <div className="cursor-pointer">
                   <svg
+                    onClick={(e) => {
+                      news[index].votes = news[index].votes - 1;
+                      setNews([...news]);
+
+                      e.target.style.stroke = "blue";
+                    }}
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-4 w-4 mx-auto"
                     fill="none"

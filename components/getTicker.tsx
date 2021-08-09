@@ -1,31 +1,50 @@
 import { useEffect, useState } from "react";
 
 const GetTicker = () => {
-  const tickerData = [
-    { label: "Crypto Market Cap", value: "$2,111,444,241,123", gain: "5.45%" },
-    { label: "XRP Price", value: "$0.72", gain: "5.45%" },
-    { label: "XRP Market Cap", value: "$111,444,241,123", gain: "5.45%" },
-  ];
-  const [ticker, setTicker] = useState(tickerData);
+  const fetcher = (url) =>
+    fetch(url, {
+      method: "GET",
+      headers: new Headers({ "Content-Type": "application/json" }),
+      credentials: "same-origin",
+    }).then((res) => res.json());
+
   useEffect(() => {
-    setTicker(tickerData);
-    console.log("set Tickerdata");
+    fetcher("/api/ticker").then((data) => {
+      console.log(data.prices);
+      setTicker(data.prices[0]);
+    });
   }, []);
 
+  const [ticker, setTicker] = useState({});
   return (
     <div className="flex">
-      {ticker.map((item, index) => (
-        <div key={index} className="flex mr-8 text-white text-xs align-middle">
-          <h5
-            className="font-bold mr-2"
-            style={{ color: "rgb(153, 153, 153)" }}
-          >
-            {item.label}
-          </h5>
-          <h5 className="font-bold mr-2	">{item.value}</h5>
-          <h5 style={{ color: "#28a745" }}>{item.gain}</h5>
-        </div>
-      ))}
+      <div className="flex mr-8 text-white text-xs align-middle">
+        <h5 className="font-bold mr-2" style={{ color: "rgb(153, 153, 153)" }}>
+          XRP Price
+        </h5>
+        <h5 className="font-bold mr-2	">${ticker.xrp_price}</h5>
+        <h5 style={{ color: "#28a745" }}>
+          {Number(ticker.xrp_gain).toFixed(2)}
+        </h5>
+      </div>
+      <div className="flex mr-8 text-white text-xs align-middle">
+        <h5 className="font-bold mr-2" style={{ color: "rgb(153, 153, 153)" }}>
+          XRP Market Cap
+        </h5>
+        <h5 className="font-bold mr-2	">${ticker.xrp_cap}</h5>
+        <h5 style={{ color: "#28a745" }}>
+          {Number(ticker.xrp_cap_gain).toFixed(2)}
+        </h5>
+      </div>
+      <div className="flex mr-8 text-white text-xs align-middle">
+        <h5 className="font-bold mr-2" style={{ color: "rgb(153, 153, 153)" }}>
+          Crypto Market Cap
+        </h5>
+        <h5 className="font-bold mr-2	">${ticker.crypto_cap}</h5>
+        <h5 style={{ color: "#28a745" }}>
+          {Number(ticker.cypto_gain).toFixed(2)}
+        </h5>
+      </div>
     </div>
   );
 };
