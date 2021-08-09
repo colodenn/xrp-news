@@ -30,8 +30,14 @@ const GetTicker = () => {
           XRP Price
         </h5>
         <h5 className="font-bold mr-2	">${ticker.xrp_price}</h5>
-        <h5 style={{ color: "#28a745" }}>
-          {Number(ticker.xrp_gain).toFixed(2)}
+        <h5
+          style={
+            String(ticker.xrp_gain)[0] !== "-"
+              ? { color: "#28a745" }
+              : { color: "red" }
+          }
+        >
+          {Number(ticker.xrp_gain).toFixed(2)}%
         </h5>
       </div>
       <div className="flex mr-8 text-white text-xs align-middle">
@@ -39,8 +45,14 @@ const GetTicker = () => {
           XRP Market Cap
         </h5>
         <h5 className="font-bold mr-2	">${ticker.xrp_cap}</h5>
-        <h5 style={{ color: "#28a745" }}>
-          {Number(ticker.xrp_cap_gain).toFixed(2)}
+        <h5
+          style={
+            String(ticker.xrp_cap_gain)[0] !== "-"
+              ? { color: "#28a745" }
+              : { color: "red" }
+          }
+        >
+          {Number(ticker.xrp_cap_gain).toFixed(2)}%
         </h5>
       </div>
       <div className="flex mr-8 text-white text-xs align-middle">
@@ -48,8 +60,14 @@ const GetTicker = () => {
           Crypto Market Cap
         </h5>
         <h5 className="font-bold mr-2	">${ticker.crypto_cap}</h5>
-        <h5 style={{ color: "#28a745" }}>
-          {Number(ticker.cypto_gain).toFixed(2)}
+        <h5
+          style={
+            String(ticker.cypto_gain)[0] !== "-"
+              ? { color: "#28a745" }
+              : { color: "red" }
+          }
+        >
+          {Number(ticker.cypto_gain).toFixed(2)}%
         </h5>
       </div>
     </div>
