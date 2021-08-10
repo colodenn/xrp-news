@@ -29,7 +29,7 @@ const GetTicker = () => {
         <h5 className="font-bold mr-2" style={{ color: "rgb(153, 153, 153)" }}>
           XRP Price
         </h5>
-        <h5 className="font-bold mr-2	">${ticker.xrp_price}</h5>
+        <h5 className="font-bold mr-2	">${ticker.xrp_price.toFixed(3)}</h5>
         <h5
           style={
             String(ticker.xrp_gain)[0] !== "-"
@@ -44,7 +44,7 @@ const GetTicker = () => {
         <h5 className="font-bold mr-2" style={{ color: "rgb(153, 153, 153)" }}>
           XRP Market Cap
         </h5>
-        <h5 className="font-bold mr-2	">${ticker.xrp_cap}</h5>
+        <h5 className="font-bold mr-2	">${ticker.xrp_cap.toFixed(0)}</h5>
         <h5
           style={
             String(ticker.xrp_cap_gain)[0] !== "-"
@@ -59,7 +59,7 @@ const GetTicker = () => {
         <h5 className="font-bold mr-2" style={{ color: "rgb(153, 153, 153)" }}>
           Crypto Market Cap
         </h5>
-        <h5 className="font-bold mr-2	">${ticker.crypto_cap}</h5>
+        <h5 className="font-bold mr-2	">${ticker.crypto_cap.toFixed(0)}</h5>
         <h5
           style={
             String(ticker.cypto_gain)[0] !== "-"

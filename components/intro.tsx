@@ -4,10 +4,14 @@ const Intro = (props) => {
       <div className="text-center">
         <h1 className="text-4xl font-semibold">Get notified on XRP news</h1>
         <p className="mt-12 px-72 font-medium text-large text-gray-500">
-          Staking Rewards is the leading data provider for staking and
-          crypto-growth tools. We are currently tracking{" "}
-          <span className="text-blue-500">225</span> yield-bearing assets with
-          an average reward rate of 14.95% and 19510 qualified providers.
+          <span className="text-blue-500">XRP</span> is the fastest & most
+          scalable digital asset, enabling real-time global payments anywhere in
+          the world. Using <span className="text-blue-500"> XRP</span>, banks
+          can source liquidity on demand in real time without having to pre-fund
+          nostro accounts. Payment Providers use
+          <span className="text-blue-500"> XRP</span> to expand reach into new
+          markets, lower foreign exchange costs and provide faster payment
+          settlement.
         </p>
       </div>
     </>
