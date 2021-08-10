@@ -3,6 +3,7 @@ import { AppProps } from "next/app";
 import "../styles/index.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  console.log(process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS);
   return (
     <>
       <Head>
