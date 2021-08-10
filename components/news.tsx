@@ -82,6 +82,7 @@ const News = (props) => {
                     name="price"
                     className="my-auto border-2 border-black px-2 py-2 align-center"
                     placeholder="$0.72"
+                    type="number"
                     value={price}
                     onChange={(e) => setPrice(Number(e.target.value))}
                   />
