@@ -188,7 +188,10 @@ const CalculateRevenue = (props) => {
                 Total Return Rate
               </h5>
               <h1 className="text-2xl font-semibold text-right">
-                {((revenue / (price * amount) - 1) * 100).toFixed(2)}%
+                {Number(
+                  ((revenue / (price * amount) - 1) * 100).toFixed(2)
+                ).toLocaleString("en-US")}
+                %
               </h1>
             </div>
             <div className="mb-4">
@@ -196,7 +199,7 @@ const CalculateRevenue = (props) => {
                 Return in Lambos
               </h5>
               <h1 className="text-2xl font-semibold text-right">
-                {(revenue / 220000).toFixed(2)}
+                {Number((revenue / 220000).toFixed(2)).toLocaleString("en-US")}
               </h1>
             </div>
             <div className="mb-4">
@@ -204,7 +207,7 @@ const CalculateRevenue = (props) => {
                 Total Return
               </h5>
               <h1 className="text-2xl font-semibold text-right">
-                ${revenue.toFixed(2)}
+                ${Number(revenue.toFixed(2)).toLocaleString("en-US")}
               </h1>
             </div>
             <div>
@@ -212,7 +215,10 @@ const CalculateRevenue = (props) => {
                 XRP Price
               </h5>
               <h1 className="text-2xl font-semibold text-right">
-                ${(price * Math.pow(1 + returns / 100, term - 1)).toFixed(2)}
+                $
+                {Number(
+                  (price * Math.pow(1 + returns / 100, term - 1)).toFixed(2)
+                ).toLocaleString("en-US")}
               </h1>
             </div>
           </div>
