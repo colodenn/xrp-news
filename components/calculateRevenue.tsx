@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { supabase } from "../utils/supabaseClient";
 import Linechart from "./linechart";
 
 const CalculateRevenue = (props) => {
@@ -11,6 +12,14 @@ const CalculateRevenue = (props) => {
   );
   const [data, setData] = useState(createData(price, amount, term, returns));
 
+  useEffect(() => {
+    supabase
+      .from("ticker")
+      .select("xrp_price")
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .then((res) => setPrice(res.data[0].xrp_price.toFixed(2)));
+  }, []);
   function createData(price, amount, term, returns) {
     const data = [];
     for (let i = 0; i < term; i++) {
