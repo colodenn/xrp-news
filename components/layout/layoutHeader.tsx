@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { supabase } from ".././../utils/supabaseClient";
-import useSWR from "swr";
+import { isMobile } from "react-device-detect";
 
 const customStyles = {
   content: {
@@ -46,19 +46,24 @@ const LayoutHeader = (props) => {
       setLoading(false);
     }
   };
+  const [width, setWidth] = useState(1440);
 
   const [session, setSession] = useState(null);
 
   useEffect(() => {
     setSession(supabase.auth.session());
-
+    if (typeof window !== "undefined") {
+      // detect window screen width function
+      setWidth(window.innerWidth);
+    }
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
   }, []);
+
   return (
     <>
-      <div className="flex justify-between">
+      <div className="flex justify-between px-8 md:px-0">
         <a className="flex align-center">
           <a href="/">
             <div className="mr-4 my-auto">
@@ -83,57 +88,73 @@ const LayoutHeader = (props) => {
             <a href="/">XRP to the Moon</a>
           </h1>
         </a>
-        <div className="my-auto  tracking-widest flex text-sm font-medium text-gray-700">
-          {/* <a href="#" style={{ color: "#1b1b1b" }} className="mr-12 my-auto">
-            Crypto
-          </a>
-          <a href="#" style={{ color: "#1b1b1b" }} className="mr-12 my-auto">
-            Crypto
-          </a> */}
-          <a
-            href="/portfolio"
-            style={{ color: "#1b1b1b" }}
-            className=" mr-12 my-auto"
-          >
-            <span className="hover:text-gray-500">Portfolio</span>
-          </a>
-          <div
-            className=" my-auto p-3 mr-12"
-            style={{ backgroundColor: "#1b1b1b" }}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className=" my-auto  align-center h-3 w-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="white"
+        {width > 640 ? (
+          <div className="my-auto  tracking-widest flex text-sm font-medium text-gray-700">
+            <a
+              href="/portfolio"
+              style={{ color: "#1b1b1b" }}
+              className=" mr-12 my-auto"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
+              <span className="hover:text-gray-500">Portfolio</span>
+            </a>
+            <div
+              className=" my-auto p-3 mr-12"
+              style={{ backgroundColor: "#1b1b1b" }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className=" my-auto  align-center h-3 w-3"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="white"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </div>
+            {!session ? (
+              <button
+                onClick={() => openModal()}
+                className="my-auto text-gray-800 text-sm font-semibold"
+              >
+                Login
+              </button>
+            ) : (
+              <button
+                onClick={async () =>
+                  supabase.auth.signOut().then(() => console.log("logout"))
+                }
+                className="my-auto text-gray-800 text-sm font-semibold"
+              >
+                Logout
+              </button>
+            )}
           </div>
-          {!session ? (
-            <button
-              onClick={() => openModal()}
-              className="my-auto text-gray-800 text-sm font-semibold"
-            >
-              Login
-            </button>
-          ) : (
-            <button
-              onClick={async () =>
-                supabase.auth.signOut().then(() => console.log("logout"))
-              }
-              className="my-auto text-gray-800 text-sm font-semibold"
-            >
-              Logout
-            </button>
-          )}
-        </div>
+        ) : (
+          <div className="my-auto  tracking-widest flex text-sm font-medium text-gray-700">
+            {!session ? (
+              <button
+                onClick={() => openModal()}
+                className="my-auto text-gray-800 text-sm font-semibold"
+              >
+                Login
+              </button>
+            ) : (
+              <button
+                onClick={async () =>
+                  supabase.auth.signOut().then(() => console.log("logout"))
+                }
+                className="my-auto text-gray-800 text-sm font-semibold"
+              >
+                Logout
+              </button>
+            )}
+          </div>
+        )}
       </div>
       <Modal
         isOpen={modalIsOpen}
@@ -142,7 +163,7 @@ const LayoutHeader = (props) => {
         style={customStyles}
         contentLabel="Example Modal"
       >
-        <div className="pb-6 pt-4 px-16 text-center mx-auto">
+        <div className="pb-6 pt-4 px-4 md:px-16 text-center mx-auto">
           <div
             className="flex justify-end mb-4 cursor-pointer"
             onClick={() => closeModal()}
@@ -166,7 +187,7 @@ const LayoutHeader = (props) => {
             Login or Register
           </h2>
           <input
-            className="px-24 text-gray-800 text-center border-2 border-black font-bold font-mono mt-2 py-2"
+            className="px-8 md:px-24 text-gray-800 text-center border-2 border-black font-bold font-mono mt-2 py-2"
             placeholder="email"
             type="email"
             value={email}

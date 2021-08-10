@@ -23,12 +23,14 @@ const GetTicker = () => {
     cypto_gain: 0,
   });
   return (
-    <div className="flex">
-      <div className="flex mr-8 text-white text-xs align-middle">
-        <h5 className="font-bold mr-2" style={{ color: "rgb(153, 153, 153)" }}>
+    <div className="flex ">
+      <div className="inline-block md:flex mr-4 md:mr-8 text-white text-xs align-middle ">
+        <h5 className="font-bold mr-2 " style={{ color: "rgb(153, 153, 153)" }}>
           XRP Price
         </h5>
-        <h5 className="font-bold mr-2	">${ticker.xrp_price.toFixed(3)}</h5>
+        <h5 className="font-bold mr-2 pr-8 md:pr-0	">
+          ${ticker.xrp_price.toFixed(3)}
+        </h5>
         <h5
           style={
             String(ticker.xrp_gain)[0] !== "-"
@@ -39,8 +41,8 @@ const GetTicker = () => {
           {Number(ticker.xrp_gain).toFixed(2)}%
         </h5>
       </div>
-      <div className="flex mr-8 text-white text-xs align-middle">
-        <h5 className="font-bold mr-2" style={{ color: "rgb(153, 153, 153)" }}>
+      <div className="inline-block md:flex mr-8 text-white text-xs align-middle">
+        <h5 className="font-bold mr-2 " style={{ color: "rgb(153, 153, 153)" }}>
           XRP Market Cap
         </h5>
         <h5 className="font-bold mr-2	">
@@ -56,7 +58,7 @@ const GetTicker = () => {
           {Number(ticker.xrp_cap_gain).toFixed(2)}%
         </h5>
       </div>
-      <div className="flex mr-8 text-white text-xs align-middle">
+      <div className="md:flex inline-block mr-8 text-white text-xs align-middle">
         <h5 className="font-bold mr-2" style={{ color: "rgb(153, 153, 153)" }}>
           Crypto Market Cap
         </h5>

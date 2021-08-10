@@ -11,7 +11,7 @@ export default function Home() {
         <Layout>
           <LayoutHeader />
           <div className="mx-auto justify-center">
-            <div className="font-bold text-6xl text-center mt-24 font-mono">
+            <div className="font-bold text-6xl text-center mt-24 font-mono md:p-0 px-4">
               Cooming Soon!
             </div>
             <div className="mx-auto w-full flex justify-center mt-16">

@@ -17,21 +17,24 @@ const News = (props) => {
     .from("predictions")
     .on("INSERT", (payload) => {
       setNews([payload.new].concat(news));
-      console.log("new subscribes");
     })
     .subscribe();
 
   useEffect(() => {
+    supabase
+      .from("ticker")
+      .select("xrp_price")
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .then((res) => setPrice(res.data[0].xrp_price.toFixed(2)));
     setSession(supabase.auth.session());
     async function get() {
-      console.log("test");
       let res = await supabase
         .from("predictions")
         .select("*")
         .order("created_at", { ascending: false })
         .limit(6);
       setNews(res.data);
-      console.log(res);
     }
 
     get();
@@ -45,29 +48,33 @@ const News = (props) => {
       "/api/prediction",
       session.access_token,
       JSON.stringify({ price: price, days: days })
-    );
+    ).then((res) => {
+      if (res.error != null) {
+        alert(res.error);
+      }
+    });
   }
   return (
     <>
       <div className="mt-24">
-        <h3 className="text-xl font-medium">News:</h3>
+        <h3 className="md:text-left text-center text-xl font-medium">News:</h3>
         <div className="flex mt-4 w-full">
-          <button className="w-1/6 bg-black px-4 py-2 text-white font-medium">
-            Price Predictions
+          <button className="w-1/4 md:w-1/6 bg-black px-4 py-2 text-white font-medium">
+            Price Prediction
           </button>
-          <button className=" w-1/6 px-4 py-2 text-black   border-2 border-black font-medium">
+          <button className=" w-1/4 md:w-1/6 px-4 py-2 text-black   border-2 border-black font-medium">
             SEC
           </button>
-          <button className=" w-1/6 px-4 py-2 text-black  border-l-0 border-2 border-black font-medium">
+          <button className=" w-1/4 md:w-1/6 px-4 py-2 text-black  border-l-0 border-2 border-black font-medium">
             News
           </button>
-          <button className=" w-1/6 px-4 py-2 text-black  border-l-0 border-2 border-black font-medium">
+          <button className=" w-1/4 md:w-1/6 px-4 py-2 text-black  border-l-0 border-2 border-black font-medium">
             Reddit
           </button>
         </div>
         <div className="mt-8  ">
           <div className="flex font-mono justify-between border-2 mb-8 border-black px-8 py-4 align-center my-auto">
-            <div className="flex ">
+            <div className=" md:flex ">
               <div className="my-auto mr-4 flex">
                 <label htmlFor="price align-center my-auto mr-4">
                   <span className="mr-4">Price Prediction:</span>
@@ -90,20 +97,20 @@ const News = (props) => {
                     value={days}
                     onChange={(e) => setDays(Number(e.target.value))}
                   />
-                  <span className="ml-4">Days</span>
+                  <span className="md:ml-4">Days</span>
                 </label>
               </div>
             </div>
-            <div>
+            <div className="md:mx-0 mx-auto flex my-auto md:block ">
               {session ? (
                 <button
                   onClick={() => makePrediction()}
-                  className="ml-8     hover:bg-transparent hover:text-black border-2 border-black bg-black text-white px-4 py-2 font-medium"
+                  className="ml-2 md:ml-8      hover:bg-transparent hover:text-black border-2 border-black bg-black text-white px-4 py-2 font-medium"
                 >
                   Submit
                 </button>
               ) : (
-                <button className="ml-8     hover:bg-transparent hover:text-black border-2 border-black bg-black text-white px-4 py-2 font-medium">
+                <button className="ml-2 md:ml-8     hover:bg-transparent hover:text-black border-2 border-black bg-black text-white px-4 py-2 font-medium">
                   Login to submit
                 </button>
               )}

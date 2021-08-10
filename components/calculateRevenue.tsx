@@ -58,163 +58,171 @@ const CalculateRevenue = (props) => {
   return (
     <>
       <div className="mt-16">
-        <h3 className="text-xl font-medium">Return Calculator:</h3>
-        <div className=" mx-auto flex justify-between">
-          <div className="">
-            <div className="mt-4">
-              <label htmlFor="price" className="block">
-                <span>Price</span>
-                <br />
-                <input
-                  step="0.001"
-                  onChange={(e) => {
-                    setPrice(parseFloat(e.target.value));
-                    setRevenue(
-                      parseFloat(e.target.value) *
-                        amount *
-                        Math.pow(1 + returns / 100, term - 1)
-                    );
-                    setData(
-                      createData(
-                        parseFloat(e.target.value),
-                        amount,
-                        term,
-                        returns
-                      )
-                    );
-                  }}
-                  name="price"
-                  type="number"
-                  className="pl-4 font-bold border-black border-2 focus:border-none  p-2 "
-                  value={price}
-                />
-              </label>
-            </div>
-            <div className="mt-4">
-              <label htmlFor="amount">
-                Amount
-                <br />
-                <input
-                  onChange={(e) => {
-                    setAmount(parseFloat(e.target.value));
-                    setRevenue(
-                      parseFloat(e.target.value) *
-                        price *
-                        Math.pow(1 + returns / 100, term - 1)
-                    );
-                    setData(
-                      createData(
-                        price,
-                        parseFloat(e.target.value),
-                        term,
-                        returns
-                      )
-                    );
-                  }}
-                  name="amount"
-                  type="number"
-                  className="pl-4 font-bold border-black border-2 focus:border-none  p-2 "
-                  value={amount}
-                />
-              </label>
-            </div>
-            <div className="mt-4">
-              <label htmlFor="price">
-                Term
-                <br />
-                <input
-                  onChange={(e) => {
-                    setTerm(parseFloat(e.target.value));
-                    setRevenue(
-                      amount *
-                        price *
-                        Math.pow(
-                          1 + returns / 100,
-                          parseFloat(e.target.value) - 1
+        <h3 className="md:ml-0 text-center md:text-left text-xl font-medium">
+          Return Calculator:
+        </h3>
+        <div className=" mx-auto md:flex md:justify-between">
+          <div className="flex justify md:block ">
+            <div className="mx-auto ">
+              <div className="mt-4">
+                <label htmlFor="price" className="block">
+                  <span>Price</span>
+                  <br />
+                  <input
+                    step="0.001"
+                    onChange={(e) => {
+                      setPrice(parseFloat(e.target.value));
+                      setRevenue(
+                        parseFloat(e.target.value) *
+                          amount *
+                          Math.pow(1 + returns / 100, term - 1)
+                      );
+                      setData(
+                        createData(
+                          parseFloat(e.target.value),
+                          amount,
+                          term,
+                          returns
                         )
-                    );
-                    setData(
-                      createData(
-                        price,
-                        amount,
-                        parseFloat(e.target.value),
-                        returns
-                      )
-                    );
-                  }}
-                  name="price"
-                  type="number"
-                  className="pl-4 font-bold border-black border-2 focus:border-none  p-2 "
-                  value={term}
-                />
-              </label>
-            </div>
-            <div className="mt-4">
-              <label htmlFor="price">
-                Yearly return in %
-                <br />
-                <input
-                  step="0.1"
-                  onChange={(e) => {
-                    setReturn(parseFloat(e.target.value));
-                    setRevenue(
-                      amount *
-                        price *
-                        Math.pow(1 + parseFloat(e.target.value) / 100, term - 1)
-                    );
-                    setData(
-                      createData(
-                        price,
-                        amount,
-                        term,
-                        parseFloat(e.target.value)
-                      )
-                    );
-                  }}
-                  type="number"
-                  name="price"
-                  className="pl-4 font-bold border-black border-2 focus:border-none  p-2 "
-                  value={returns}
-                />
-              </label>
+                      );
+                    }}
+                    name="price"
+                    type="number"
+                    className="pl-4 font-bold border-black border-2 focus:border-none  p-2 "
+                    value={price}
+                  />
+                </label>
+              </div>
+              <div className="mt-4">
+                <label htmlFor="amount">
+                  Amount
+                  <br />
+                  <input
+                    onChange={(e) => {
+                      setAmount(parseFloat(e.target.value));
+                      setRevenue(
+                        parseFloat(e.target.value) *
+                          price *
+                          Math.pow(1 + returns / 100, term - 1)
+                      );
+                      setData(
+                        createData(
+                          price,
+                          parseFloat(e.target.value),
+                          term,
+                          returns
+                        )
+                      );
+                    }}
+                    name="amount"
+                    type="number"
+                    className="pl-4 font-bold border-black border-2 focus:border-none  p-2 "
+                    value={amount}
+                  />
+                </label>
+              </div>
+              <div className="mt-4">
+                <label htmlFor="price">
+                  Term
+                  <br />
+                  <input
+                    onChange={(e) => {
+                      setTerm(parseFloat(e.target.value));
+                      setRevenue(
+                        amount *
+                          price *
+                          Math.pow(
+                            1 + returns / 100,
+                            parseFloat(e.target.value) - 1
+                          )
+                      );
+                      setData(
+                        createData(
+                          price,
+                          amount,
+                          parseFloat(e.target.value),
+                          returns
+                        )
+                      );
+                    }}
+                    name="price"
+                    type="number"
+                    className="pl-4 font-bold border-black border-2 focus:border-none  p-2 "
+                    value={term}
+                  />
+                </label>
+              </div>
+              <div className="mt-4">
+                <label htmlFor="price">
+                  Yearly return in %
+                  <br />
+                  <input
+                    step="0.1"
+                    onChange={(e) => {
+                      setReturn(parseFloat(e.target.value));
+                      setRevenue(
+                        amount *
+                          price *
+                          Math.pow(
+                            1 + parseFloat(e.target.value) / 100,
+                            term - 1
+                          )
+                      );
+                      setData(
+                        createData(
+                          price,
+                          amount,
+                          term,
+                          parseFloat(e.target.value)
+                        )
+                      );
+                    }}
+                    type="number"
+                    name="price"
+                    className="pl-4 font-bold border-black border-2 focus:border-none  p-2 "
+                    value={returns}
+                  />
+                </label>
+              </div>
             </div>
           </div>
-          <div className="w-1/2 mt-10">
+
+          <div className="md:w-1/2 w-full flex justify-center h-96 mt-10">
             <Linechart data={data} />
           </div>
-          <div className="mt-8">
-            <div className="mb-4">
-              <h5 className="text-widest tracking-widest font-light text-xl text-right">
+          <div className="mt-8 flex justify-center md:block">
+            <div className="mx-2 md:mb-4 md:mx-0">
+              <h5 className="md:text-widest md:tracking-widest font-light text-center md:text-xl md:text-right">
                 Total Return Rate
               </h5>
-              <h1 className="text-2xl font-semibold text-right">
+              <h1 className="md:text-2xl  text-center font-semibold md:text-right ">
                 {Number(
                   ((revenue / (price * amount) - 1) * 100).toFixed(2)
                 ).toLocaleString("en-US")}
                 %
               </h1>
             </div>
-            <div className="mb-4">
-              <h5 className="text-widest tracking-widest font-light text-xl text-right">
+            <div className="mx-2 md:mb-4 md:mx-0">
+              <h5 className="md:text-widest md:tracking-widest font-light text-center md:text-xl md:text-right">
                 Return in Lambos
               </h5>
-              <h1 className="text-2xl font-semibold text-right">
+              <h1 className="md:text-2xl  text-center font-semibold md:text-right">
                 {Number((revenue / 220000).toFixed(2)).toLocaleString("en-US")}
               </h1>
             </div>
-            <div className="mb-4">
-              <h5 className="text-widest tracking-widest font-light text-xl text-right">
+            <div className="mx-2 md:mb-4 md:mx-0">
+              <h5 className="md:text-widest md:tracking-widest font-light text-center md:text-xl md:text-right">
                 Total Return
               </h5>
-              <h1 className="text-2xl font-semibold text-right">
+              <h1 className="md:text-2xl  text-center font-semibold md:text-right">
                 ${Number(revenue.toFixed(2)).toLocaleString("en-US")}
               </h1>
             </div>
-            <div>
-              <h5 className="text-widest tracking-widest font-light text-xl text-right">
+            <div className="mx-2 md:mx-0">
+              <h5 className="md:text-widest md:tracking-widest font-light text-center md:text-xl md:text-right">
                 XRP Price
               </h5>
-              <h1 className="text-2xl font-semibold text-right">
+              <h1 className="md:text-2xl  text-center font-semibold md:text-right">
                 $
                 {Number(
                   (price * Math.pow(1 + returns / 100, term - 1)).toFixed(2)
