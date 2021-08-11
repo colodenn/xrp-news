@@ -1,36 +1,32 @@
+import { useEffect, useState } from "react";
+import { supabase } from "../utils/supabaseClient";
+
 const Sec = (props) => {
-  const data = [
-    // {
-    //   id: 1,
-    //   votes: 0,
-    //   title: "Title",
-    //   content:
-    //     "Lorem impsum Lorem impsumLorem impsumLorem impsumLorem impsumLorem impsumLorem impsumLorem impsumLorem impsum ",
-    //   img: "https://www.handelsblatt.com/images/image/27423798/3-format2003.img",
-    // },
-    // {
-    //   id: 2,
-    //   votes: 0,
-    //   title: "Title",
-    //   content:
-    //     "Lorem impsum Lorem impsumLorem impsumLorem impsumLorem impsumLorem impsumLorem impsumLorem impsumLorem impsum ",
-    //   img: "https://www.handelsblatt.com/images/image/27423798/3-format2003.img",
-    // },
-  ];
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    async function get() {
+      let data = await supabase
+        .from("news")
+        .select("*, title")
+        .ilike("title", "%SEC%");
+      setData(data.data);
+    }
+    get();
+  }, []);
   return (
     <>
       {data.map((e) => {
         return (
           <a
-            href={"/posts/" + e.id}
+            href={e.guid}
             className="cursor-pointer border-2 border-black px-4 py-2 flex mb-8"
           >
-            <div className="flex justify-center">
-              <img className="h-16 my-auto" src={e.img} />
+            <div className="flex justify-center ">
+              <img className="h-16 my-auto" src={e.imageurl} />
             </div>
-            <div className="ml-8">
+            <div className="ml-8 w-11/12">
               <h1 className="font-mono text-2xl font-semibold">{e.title}</h1>
-              <p className="font-mono text-large ">{e.content}</p>
+              <p className="font-mono text-large ">{e.body}</p>
             </div>
             <div className="my-auto ">
               <div className="cursor-pointer ">
@@ -55,7 +51,7 @@ const Sec = (props) => {
                   />
                 </svg>
               </div>
-              <p className="font-mono text-center">{e.votes}</p>
+              <p className="font-mono text-center">{e.upvotes}</p>
               {/* Arrow Down  */}
               <div className="cursor-pointer">
                 <svg

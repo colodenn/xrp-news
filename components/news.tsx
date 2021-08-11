@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../utils/supabaseClient";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Sec from "../components/sec";
+import CryptoNews from "./cryptonews";
 const News = (props) => {
   const [news, setNews] = useState([]);
   const [days, setDays] = useState(365);
@@ -203,7 +204,7 @@ const News = (props) => {
           <Sec />
         </TabPanel>
         <TabPanel>
-          <h1 className="text-4xl font-bold font-mono">Coming Soon!</h1>
+          <CryptoNews />
         </TabPanel>
         <TabPanel>
           <h1 className="text-4xl font-bold font-mono">Coming Soon!</h1>
